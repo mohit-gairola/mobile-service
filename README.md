@@ -38,4 +38,6 @@ If you run it on your local then API can called as shown below :-
 
 GET http:localhosh:8080/mobile/search?priceEur=200
 
-
+# Technologies & frameworks 
+Java 8 
+Spring Boot 2.3.3
