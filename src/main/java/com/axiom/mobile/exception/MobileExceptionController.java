@@ -15,7 +15,7 @@ public class MobileExceptionController {
 
 	@ExceptionHandler(value = ResourceAccessException.class)
 	public ResponseEntity<Object> unknownHostException(ResourceAccessException exception) {
-		return new ResponseEntity<>("Handset Search API is not reachable. Please try after sometime",
+		return new ResponseEntity<>("Handset Search API is not reachable right now. Please try after sometime",
 				HttpStatus.SERVICE_UNAVAILABLE);
 	}
 	
