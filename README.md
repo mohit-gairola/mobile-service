@@ -36,7 +36,7 @@ MobileServiceApplication.java is the main class which can be run to bring the ap
 
 If you run it on your local then API can called as shown below :-
 
-GET http:localhosh:8080/mobile/search?priceEur=200
+GET http://localhost:8080/mobile/search?priceEur=200
 
 # Technologies & frameworks 
 Java 8 
