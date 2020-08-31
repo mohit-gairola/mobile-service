@@ -19,7 +19,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.test.util.ReflectionTestUtils;
 import org.springframework.web.client.RestTemplate;
 
-import com.axiom.mobile.model.HandsetData;
+import com.axiom.mobile.model.Handset;
 import com.axiom.mobile.model.Release;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -32,10 +32,10 @@ public class MobileServiceTest {
 	private RestTemplate restTemplate;
 
 	@Mock
-	private ResponseEntity<List<HandsetData>> responseEntity;
+	private ResponseEntity<List<Handset>> responseEntity;
 
 	@Mock
-	private List<HandsetData> handsetDataList;
+	private List<Handset> handsetDataList;
 
 	@Before
 	public void setUp() {
@@ -43,14 +43,14 @@ public class MobileServiceTest {
 
 		Mockito.when(responseEntity.getBody()).thenReturn(getHandsetData());
 		Mockito.when(restTemplate.exchange(ArgumentMatchers.anyString(), ArgumentMatchers.eq(HttpMethod.GET),
-				ArgumentMatchers.isNull(), ArgumentMatchers.<ParameterizedTypeReference<List<HandsetData>>>any()))
+				ArgumentMatchers.isNull(), ArgumentMatchers.<ParameterizedTypeReference<List<Handset>>>any()))
 				.thenReturn(responseEntity);
 	}
 
 	@Test
 	public void testSearchMobileRecordsBySIM() {
 
-		List<HandsetData> result = mobileService.searchHandsetRecord("eSIM", null, null);
+		List<Handset> result = mobileService.searchHandsetRecord("eSIM", null, null);
 
 		assertEquals(3, result.size());
 		assertEquals("Ericsson T20", result.get(0).getPhone());
@@ -62,7 +62,7 @@ public class MobileServiceTest {
 	@Test
 	public void testSearchMobileRecordsByPrice() {
 
-		List<HandsetData> result = mobileService.searchHandsetRecord(null, "200", null);
+		List<Handset> result = mobileService.searchHandsetRecord(null, "200", null);
 
 		assertEquals(2, result.size());
 		assertEquals("Ericsson T20", result.get(0).getPhone());
@@ -73,7 +73,7 @@ public class MobileServiceTest {
 	@Test
 	public void testSearchMobileRecordsByAnnounceDate() {
 
-		List<HandsetData> result = mobileService.searchHandsetRecord(null, null, "2000");
+		List<Handset> result = mobileService.searchHandsetRecord(null, null, "2000");
 
 		assertEquals(2, result.size());
 		assertEquals("Ericsson T30", result.get(0).getPhone());
@@ -84,18 +84,18 @@ public class MobileServiceTest {
 	@Test
 	public void testSearchMobileRecordsBySimAndPriceAndAnnounceDate() {
 
-		List<HandsetData> result = mobileService.searchHandsetRecord("eSIM", "400", "2000");
+		List<Handset> result = mobileService.searchHandsetRecord("eSIM", "400", "2000");
 
 		assertEquals(1, result.size());
 		assertEquals("Ericsson T40", result.get(0).getPhone());
 
 	}
 
-	private List<HandsetData> getHandsetData() {
+	private List<Handset> getHandsetData() {
 		
-		List<HandsetData> handsetList = new ArrayList<>();
+		List<Handset> handsetList = new ArrayList<>();
 		
-		HandsetData handsetData1 = new HandsetData();
+		Handset handsetData1 = new Handset();
 		handsetData1.setPhone("Ericsson T20");
 		handsetData1.setSim("eSIM");
 		Release release1 = new Release();
@@ -104,7 +104,7 @@ public class MobileServiceTest {
 		handsetData1.setRelease(release1);
 		handsetList.add(handsetData1);
 
-		HandsetData handsetData2 = new HandsetData();
+		Handset handsetData2 = new Handset();
 		handsetData2.setPhone("Ericsson T30");
 		handsetData2.setSim("Nano-SIM eSIM");
 		Release release2 = new Release();
@@ -113,7 +113,7 @@ public class MobileServiceTest {
 		handsetData2.setRelease(release2);
 		handsetList.add(handsetData2);
 
-		HandsetData handsetData3 = new HandsetData();
+		Handset handsetData3 = new Handset();
 		handsetData3.setPhone("Ericsson T40");
 		handsetData3.setSim("eSIM");
 		Release release3 = new Release();

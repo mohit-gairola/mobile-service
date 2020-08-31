@@ -1,5 +1,9 @@
 package com.axiom.mobile.model;
-public class HandsetData
+
+import org.springframework.data.elasticsearch.annotations.Document;
+
+@Document(indexName="handsetdevice")
+public class Handset
 {
     private String phone;
 

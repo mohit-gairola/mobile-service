@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.axiom.mobile.model.HandsetData;
+import com.axiom.mobile.model.Handset;
 import com.axiom.mobile.service.MobileService;
 import com.axiom.mobile.validator.SimValidator;
 
@@ -24,7 +24,7 @@ public class MobileController {
 	private SimValidator validator;
 
 	@GetMapping(path = "/search")
-	public List<HandsetData> getMobileData(@RequestParam(name = "sim", required = false) String sim,
+	public List<Handset> getMobileData(@RequestParam(name = "sim", required = false) String sim,
 			@RequestParam(name = "priceEur", required = false) String price,
 			@RequestParam(name = "announceDate", required = false) String announceDate) {
 

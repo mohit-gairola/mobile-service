@@ -13,7 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import org.springframework.web.client.RestTemplate;
 
-import com.axiom.mobile.model.HandsetData;
+import com.axiom.mobile.model.Handset;
 
 @Service
 public class MobileServiceImpl implements MobileService {
@@ -24,12 +24,12 @@ public class MobileServiceImpl implements MobileService {
 	@Value("${mobile.handset.api.url}")
 	private String handsetApiUrl;
 
-	public List<HandsetData> searchHandsetRecord(String sim, String price, String announceDate) {
+	public List<Handset> searchHandsetRecord(String sim, String price, String announceDate) {
 
 		// Fetching Handset Data using REST API
-		List<HandsetData> handsetRecords = getHandsetData();
+		List<Handset> handsetRecords = getHandsetData();
 
-		Stream<HandsetData> handsetDataStream = handsetRecords.parallelStream();
+		Stream<Handset> handsetDataStream = handsetRecords.parallelStream();
 
 		// Filtering records on the basis of SIM
 		if (!StringUtils.isEmpty(sim)) {
@@ -57,15 +57,15 @@ public class MobileServiceImpl implements MobileService {
 		}
 
 		// Finally collecting records on the basis of filters applied above
-		List<HandsetData> filteredRecords = handsetDataStream.collect(Collectors.toList());
+		List<Handset> filteredRecords = handsetDataStream.collect(Collectors.toList());
 
 		return filteredRecords;
 
 	}
 
-	private List<HandsetData> getHandsetData() {
-		ResponseEntity<List<HandsetData>> responseEntity= restTemplate.exchange(handsetApiUrl, HttpMethod.GET, null,
-				new ParameterizedTypeReference<List<HandsetData>>() {
+	private List<Handset> getHandsetData() {
+		ResponseEntity<List<Handset>> responseEntity= restTemplate.exchange(handsetApiUrl, HttpMethod.GET, null,
+				new ParameterizedTypeReference<List<Handset>>() {
 				});
 		return responseEntity.getBody();
 	}
