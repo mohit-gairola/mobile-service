@@ -1,8 +1,8 @@
 package com.axiom.mobile.repository;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.elasticsearch.core.query.Criteria;
@@ -22,21 +22,25 @@ public class HandsetRepositoryDaoImpl implements HandsetRepositoryDao {
 	@SuppressWarnings("deprecation")
 	public List<Handset> searchHandsetRecord(Map<String, String> propertiesMap) {
 
-		List<Handset> handsetList = new ArrayList<Handset>();
-
 		Criteria criteria = new Criteria();
 
 		propertiesMap.forEach((propName, propValue) -> {
-
 			if (!StringUtils.isEmpty(propValue)) {
-				criteria.and(Criteria.where("*." + propName).is(propValue));
+				if (propName.equalsIgnoreCase("priceEur") || propName.equalsIgnoreCase("announceDate")) {
+					criteria.and(Criteria.where("release." + propName).is(propValue));
+				} else if (propName.equalsIgnoreCase("audioJack") || propName.equalsIgnoreCase("gps")
+						|| propName.equalsIgnoreCase("battery")) {
+					criteria.and(Criteria.where("hardware." + propName).is(propValue));
+				} else {
+					criteria.and(Criteria.where(propName).is(propValue));
+				}
 			}
 		});
 
 		Query query = new CriteriaQuery(criteria);
 
-		handsetRepository.search(query).forEach(h -> handsetList.add(h));
-		return handsetList;
+		return handsetRepository.search(query).stream().collect(Collectors.toList());
+
 	}
 
 	public Handset save(Handset handset) {

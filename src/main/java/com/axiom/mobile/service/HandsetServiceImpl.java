@@ -15,7 +15,7 @@ public class HandsetServiceImpl implements HandsetService {
 	@Autowired
 	private HandsetRepositoryDaoImpl handsetRepository;
 
-	public List<Handset> searchHandsetRecord(Map<String,String> propertiesMap) {
+	public List<Handset> searchHandsetRecord(Map<String, String> propertiesMap) {
 
 		return handsetRepository.searchHandsetRecord(propertiesMap);
 
@@ -23,9 +23,7 @@ public class HandsetServiceImpl implements HandsetService {
 
 	public void insertHandsetRecords(List<Handset> handsetList) {
 
-		for (Handset handset : handsetList) {
-			handsetRepository.save(handset);
-		}
+		handsetList.forEach(handset -> handsetRepository.save(handset));
 
 	}
 
