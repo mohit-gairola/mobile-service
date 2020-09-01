@@ -2,6 +2,7 @@ package com.axiom.mobile.repository;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.elasticsearch.core.query.Criteria;
@@ -19,46 +20,18 @@ public class HandsetRepositoryDaoImpl implements HandsetRepositoryDao {
 	private HandsetRepository handsetRepository;
 
 	@SuppressWarnings("deprecation")
-	public List<Handset> searchHandsetRecord(String sim, String price, String announceDate, String phone, String id,
-			String brand, String resolution, String picture, String audioJack, String gps, String battery) {
+	public List<Handset> searchHandsetRecord(Map<String, String> propertiesMap) {
 
 		List<Handset> handsetList = new ArrayList<Handset>();
 
 		Criteria criteria = new Criteria();
 
-		if (!StringUtils.isEmpty(sim)) {
-			criteria.and(Criteria.where("sim").is(sim));
-		}
-		if (!StringUtils.isEmpty(price)) {
-			criteria.and(Criteria.where("release.priceEur").is(price));
-		}
-		if (!StringUtils.isEmpty(announceDate)) {
-			criteria.and(Criteria.where("release.announceDate").is(announceDate));
-		}
-		if (!StringUtils.isEmpty(phone)) {
-			criteria.and(Criteria.where("phone").is(phone));
-		}
-		if (!StringUtils.isEmpty(id)) {
-			criteria.and(Criteria.where("id").is(id));
-		}
-		if (!StringUtils.isEmpty(brand)) {
-			criteria.and(Criteria.where("brand").is(brand));
-		}
-		if (!StringUtils.isEmpty(resolution)) {
-			criteria.and(Criteria.where("resolution").is(resolution));
-		}
-		if (!StringUtils.isEmpty(picture)) {
-			criteria.and(Criteria.where("picture").is(picture));
-		}
-		if (!StringUtils.isEmpty(audioJack)) {
-			criteria.and(Criteria.where("hardware.audioJack").is(audioJack));
-		}
-		if (!StringUtils.isEmpty(gps)) {
-			criteria.and(Criteria.where("hardware.gps").is(gps));
-		}
-		if (!StringUtils.isEmpty(battery)) {
-			criteria.and(Criteria.where("hardware.battery").is(battery));
-		}
+		propertiesMap.forEach((propName, propValue) -> {
+
+			if (!StringUtils.isEmpty(propValue)) {
+				criteria.and(Criteria.where("*." + propName).is(propValue));
+			}
+		});
 
 		Query query = new CriteriaQuery(criteria);
 
@@ -70,4 +43,3 @@ public class HandsetRepositoryDaoImpl implements HandsetRepositoryDao {
 		return handsetRepository.save(handset);
 	}
 }
-

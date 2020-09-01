@@ -1,6 +1,7 @@
 package com.axiom.mobile.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -22,20 +23,9 @@ public class HandsetController {
 	private HandsetService handsetService;
 
 	@GetMapping(path = "/search")
-	public List<Handset> getMobileData(@RequestParam(name = "sim", required = false) String sim,
-			@RequestParam(name = "priceEur", required = false) String price,
-			@RequestParam(name = "announceDate", required = false) String announceDate,
-			@RequestParam(name = "phone", required = false) String phone,
-			@RequestParam(name = "id", required = false) String id,
-			@RequestParam(name = "brand", required = false) String brand,
-			@RequestParam(name = "resolution", required = false) String resolution,
-			@RequestParam(name = "picture", required = false) String picture,
-			@RequestParam(name = "audioJack", required = false) String audioJack,
-			@RequestParam(name = "gps", required = false) String gps,
-			@RequestParam(name = "battery", required = false) String battery) {
+	public List<Handset> getMobileData(@RequestParam Map<String,String> requestParams) {
 
-		return handsetService.searchHandsetRecord(sim, price, announceDate, phone, id, brand, resolution, picture,
-				audioJack, gps, battery);
+		return handsetService.searchHandsetRecord(requestParams);
 
 	}
 

@@ -1,13 +1,13 @@
 package com.axiom.mobile.service;
 
 import java.util.List;
+import java.util.Map;
 
 import com.axiom.mobile.model.Handset;
 
 public interface HandsetService {
 
-	List<Handset> searchHandsetRecord(String sim, String price, String announceDate, String phone, String id,
-			String brand, String resolution, String picture, String audioJack, String gps, String battery);
+	List<Handset> searchHandsetRecord( Map<String,String> propertiesMap);
 
 	void insertHandsetRecords(List<Handset> handsetList);
 }
